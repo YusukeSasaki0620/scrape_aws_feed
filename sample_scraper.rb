@@ -21,8 +21,8 @@ class AwsFeedSpider < Kimurai::Base
       end
       query = xpath_query(area_block,"not(contains(text(), '(')) and not(contains(text(), ')'))")
       results[area_block]['global'] = selection_rss_urls(response, query)
-      save_to "results.json", results, format: :pretty_json
     end
+    save_to "results.json", results, format: :pretty_json
   end
 
   private def selection_area_blocks(response)
