@@ -15,6 +15,11 @@ class AwsFeedSpider < Kimurai::Base
     key_word = 'Tokyo'
     item = {}
     item[key_word] = []
+    selection_rss_url(response, key_word, item)
+    save_to "results.json", item, format: :pretty_json
+  end
+
+  private def selection_rss_url (response, key_word, item)
     response.xpath("//*[@id='AP_block']/table/tbody/tr/td[contains(text(), '#{key_word}')]").each do |target|
       path = target.path
       path[-2] = '4'
@@ -22,7 +27,6 @@ class AwsFeedSpider < Kimurai::Base
       pp rss_url = target.at_xpath(path)[:href]
       item[key_word] << rss_url
     end
-    save_to "results.json", item, format: :pretty_json
   end
 end
 
