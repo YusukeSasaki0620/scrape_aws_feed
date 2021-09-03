@@ -12,21 +12,31 @@ class AwsFeedSpider < Kimurai::Base
   }
 
   def parse(response, url:, data: {})
-    key_word = 'Tokyo'
-    item = {}
-    item[key_word] = []
-    selection_rss_url(response, key_word, item)
-    save_to "results.json", item, format: :pretty_json
+    results = {}
+    selection_regions(response).each do |region|
+      results[region] = selection_rss_urls(response, region)
+    end
+    save_to "results.json", results, format: :pretty_json
   end
 
-  private def selection_rss_url (response, key_word, item)
+  private def selection_rss_urls(response, key_word)
+    rss_urls = []
     response.xpath("//*[@id='AP_block']/table/tbody/tr/td[contains(text(), '#{key_word}')]").each do |target|
       path = target.path
       path[-2] = '4'
       path.concat('/a')
       pp rss_url = target.at_xpath(path)[:href]
-      item[key_word] << rss_url
+      rss_urls << rss_url
     end
+    rss_urls.uniq
+  end
+  private def selection_regions(response)
+    regions = []
+    response.xpath("//*[@id='AP_block']/table/tbody/tr/td[contains(text(), '(') and contains(text(), ')')]").each do |target|
+      pp region = target.text[/\((.*?)\)/, 1]
+      regions << region
+    end
+    regions.uniq
   end
 end
 
