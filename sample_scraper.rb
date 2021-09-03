@@ -14,23 +14,14 @@ class AwsFeedSpider < Kimurai::Base
   def parse(response, url:, data: {})
     results = {}
     selection_regions(response).each do |region|
-      results[region] = selection_rss_urls(response, region)
+      query = xpath_query "contains(text(), '#{region}')"
+      results[region] = selection_rss_urls(response, query)
     end
-    results['global'] = selection_rss_urls_for_global(response)
+    query = xpath_query "not(contains(text(), '(')) and not(contains(text(), ')'))"
+    results['global'] = selection_rss_urls(response, query)
     save_to "results.json", results, format: :pretty_json
   end
 
-  private def selection_rss_urls(response, key_word)
-    rss_urls = []
-    response.xpath(xpath_query "contains(text(), '#{key_word}')").each do |target|
-      path = target.path
-      path[-2] = '4'
-      path.concat('/a')
-      pp rss_url = target.at_xpath(path)[:href]
-      rss_urls << rss_url
-    end
-    rss_urls.uniq
-  end
   private def selection_regions(response)
     regions = []
     response.xpath(xpath_query "contains(text(), '(') and contains(text(), ')')").each do |target|
@@ -39,9 +30,9 @@ class AwsFeedSpider < Kimurai::Base
     end
     regions.uniq
   end
-  private def selection_rss_urls_for_global(response)
+  private def selection_rss_urls(response, query)
     rss_urls = []
-    response.xpath(xpath_query "not(contains(text(), '(')) and not(contains(text(), ')'))").each do |target|
+    response.xpath(query).each do |target|
       begin
         path = target.path
         path[-2] = '4'
