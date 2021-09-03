@@ -13,18 +13,29 @@ class AwsFeedSpider < Kimurai::Base
 
   def parse(response, url:, data: {})
     results = {}
-    selection_regions(response).each do |region|
-      query = xpath_query "contains(text(), '#{region}')"
-      results[region] = selection_rss_urls(response, query)
+    selection_area_blocks(response).each do |area_block|
+      results[area_block] =  {}
+      selection_regions(response, area_block).each do |region|
+        query = xpath_query(area_block, "contains(text(), '#{region}')")
+        results[area_block][region] = selection_rss_urls(response, query)
+      end
+      query = xpath_query(area_block,"not(contains(text(), '(')) and not(contains(text(), ')'))")
+      results[area_block]['global'] = selection_rss_urls(response, query)
+      save_to "results.json", results, format: :pretty_json
     end
-    query = xpath_query "not(contains(text(), '(')) and not(contains(text(), ')'))"
-    results['global'] = selection_rss_urls(response, query)
-    save_to "results.json", results, format: :pretty_json
   end
 
-  private def selection_regions(response)
+  private def selection_area_blocks(response)
+    area_blocks = []
+    response.xpath("//*[@id='current_events_block']/div/*[contains(@id, '_block')]").each do |target|
+      pp area_block = target[:id]
+      area_blocks << area_block
+    end
+    area_blocks.uniq
+  end
+  private def selection_regions(response, area_block)
     regions = []
-    response.xpath(xpath_query "contains(text(), '(') and contains(text(), ')')").each do |target|
+    response.xpath(xpath_query(area_block, "contains(text(), '(') and contains(text(), ')')")).each do |target|
       pp region = target.text[/\((.*?)\)/, 1]
       regions << region
     end
@@ -47,8 +58,8 @@ class AwsFeedSpider < Kimurai::Base
     rss_urls.uniq
   end
 
-  private def xpath_query(query)
-    "//*[@id='AP_block']/table/tbody/tr/td[position()=2 and #{query}]"
+  private def xpath_query(area_block, query)
+    "//*[@id='#{area_block}']/table/tbody/tr/td[position()=2 and #{query}]"
   end
 end
 
