@@ -889,6 +889,29 @@
       "/rss/imagebuilder-ap-northeast-1.rss",
       "/rss/sms-ap-northeast-1.rss"
     ],
+    "global": [
+      "/rss/chime.rss",
+      "/rss/cloudfront.rss",
+      "/rss/spencer.rss",
+      "/rss/interregionvpcpeering.rss",
+      "/rss/route53.rss",
+      "/rss/route53apprecoverycontroller.rss",
+      "/rss/route53domainregistration.rss",
+      "/rss/billingconsole.rss",
+      "/rss/chatbot.rss",
+      "/rss/globalaccelerator.rss",
+      "/rss/health.rss",
+      "/rss/iam.rss",
+      "/rss/import-export.rss",
+      "/rss/awsiotdevicemanagement.rss",
+      "/rss/management-console.rss",
+      "/rss/marketplace.rss",
+      "/rss/organizations.rss",
+      "/rss/resourcegroups.rss",
+      "/rss/supportcenter.rss",
+      "/rss/trustedadvisor.rss",
+      "/rss/awswaf.rss"
+    ],
     "position": 1
   }
 ]

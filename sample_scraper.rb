@@ -16,12 +16,13 @@ class AwsFeedSpider < Kimurai::Base
     selection_regions(response).each do |region|
       results[region] = selection_rss_urls(response, region)
     end
+    results['global'] = selection_rss_urls_for_global(response)
     save_to "results.json", results, format: :pretty_json
   end
 
   private def selection_rss_urls(response, key_word)
     rss_urls = []
-    response.xpath("//*[@id='AP_block']/table/tbody/tr/td[contains(text(), '#{key_word}')]").each do |target|
+    response.xpath("//*[@id='AP_block']/table/tbody/tr/td[position()=2 and contains(text(), '#{key_word}')]").each do |target|
       path = target.path
       path[-2] = '4'
       path.concat('/a')
@@ -32,11 +33,27 @@ class AwsFeedSpider < Kimurai::Base
   end
   private def selection_regions(response)
     regions = []
-    response.xpath("//*[@id='AP_block']/table/tbody/tr/td[contains(text(), '(') and contains(text(), ')')]").each do |target|
+    response.xpath("//*[@id='AP_block']/table/tbody/tr/td[position()=2 and contains(text(), '(') and contains(text(), ')')]").each do |target|
       pp region = target.text[/\((.*?)\)/, 1]
       regions << region
     end
     regions.uniq
+  end
+  private def selection_rss_urls_for_global(response)
+    rss_urls = []
+    response.xpath("//*[@id='AP_block']/table/tbody/tr/td[position()=2 and not(contains(text(), '(')) and not(contains(text(), ')'))]").each do |target|
+      begin
+        path = target.path
+        path[-2] = '4'
+        path.concat('/a')
+        pp rss_url = target.at_xpath(path)[:href]
+        rss_urls << rss_url
+      rescue NoMethodError
+        pp 'Error!'
+        next
+      end
+    end
+    rss_urls.uniq
   end
 end
 
