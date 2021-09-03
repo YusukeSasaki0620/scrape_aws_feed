@@ -22,7 +22,7 @@ class AwsFeedSpider < Kimurai::Base
 
   private def selection_rss_urls(response, key_word)
     rss_urls = []
-    response.xpath("//*[@id='AP_block']/table/tbody/tr/td[position()=2 and contains(text(), '#{key_word}')]").each do |target|
+    response.xpath(xpath_query "contains(text(), '#{key_word}')").each do |target|
       path = target.path
       path[-2] = '4'
       path.concat('/a')
@@ -33,7 +33,7 @@ class AwsFeedSpider < Kimurai::Base
   end
   private def selection_regions(response)
     regions = []
-    response.xpath("//*[@id='AP_block']/table/tbody/tr/td[position()=2 and contains(text(), '(') and contains(text(), ')')]").each do |target|
+    response.xpath(xpath_query "contains(text(), '(') and contains(text(), ')')").each do |target|
       pp region = target.text[/\((.*?)\)/, 1]
       regions << region
     end
@@ -41,7 +41,7 @@ class AwsFeedSpider < Kimurai::Base
   end
   private def selection_rss_urls_for_global(response)
     rss_urls = []
-    response.xpath("//*[@id='AP_block']/table/tbody/tr/td[position()=2 and not(contains(text(), '(')) and not(contains(text(), ')'))]").each do |target|
+    response.xpath(xpath_query "not(contains(text(), '(')) and not(contains(text(), ')'))").each do |target|
       begin
         path = target.path
         path[-2] = '4'
@@ -54,6 +54,10 @@ class AwsFeedSpider < Kimurai::Base
       end
     end
     rss_urls.uniq
+  end
+
+  private def xpath_query(query)
+    "//*[@id='AP_block']/table/tbody/tr/td[position()=2 and #{query}]"
   end
 end
 
