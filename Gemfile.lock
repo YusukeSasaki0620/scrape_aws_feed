@@ -112,6 +112,7 @@ PLATFORMS
 
 DEPENDENCIES
   kimurai (~> 1.4)
+  pry (~> 0.14.1)
 
 BUNDLED WITH
    2.2.26
