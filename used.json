@@ -1,0 +1,40 @@
+/feed subscribe https://status.aws.amazon.com/rss/apigateway-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/cloudwatch-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/cognito-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/dynamodb-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/ec2-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/ecr-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/ecs-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/elb-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/elasticache-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/events-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/rds-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/route53privatedns-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/route53resolver-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/sns-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/s3-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/vpc-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/autoscaling-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/backup-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/certificatemanager-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/cloudformation-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/cloudtrail-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/lambda-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/natgateway-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/networkfirewall-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/secretsmanager-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/serverlessrepo-ap-northeast-1.rss
+/feed subscribe https://status.aws.amazon.com/rss/ec2systemsmanager-ap-northeast-1.rss
+
+
+/feed subscribe https://status.aws.amazon.com/rss/cloudfront.rss
+/feed subscribe https://status.aws.amazon.com/rss/route53.rss
+/feed subscribe https://status.aws.amazon.com/rss/route53apprecoverycontroller.rss
+/feed subscribe https://status.aws.amazon.com/rss/route53domainregistration.rss
+/feed subscribe https://status.aws.amazon.com/rss/health.rss
+/feed subscribe https://status.aws.amazon.com/rss/iam.rss
+/feed subscribe https://status.aws.amazon.com/rss/management-console.rss
+/feed subscribe https://status.aws.amazon.com/rss/awswaf.rss
+
+
+/feed subscribe  https://status.aws.amazon.com/rss/certificatemanager-us-east-1.rss
